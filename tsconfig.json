@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "./dist",
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016",
+      "es2017"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "exclude": [
+    "client/node_modules",
+    "node_modules",
+    "dist",
+    "storage",
+    "client",
+    "test1",
+    "test2",
+    "test3",
+    "test4",
+    "test5",
+    "test6"
+  ]
+}

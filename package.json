@@ -1,0 +1,44 @@
+{
+  "name": "okazajo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run tsc && parcel client/index.html",
+    "concurrently": "concurrently",
+    "dev:client": "parcel client/index.html",
+    "dev:server": "scripty",
+    "nodemon": "nodemon",
+    "test": "mocha --exit --require ts-node/register/type-check --bail server/tests/index.ts",
+    "tsc": "tsc"
+  },
+  "author": "",
+  "license": "AGPLv3",
+  "engines": {
+    "node": ">=8.x",
+    "npm": ">=5.x"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "moment": "^2.22.2",
+    "rc-calendar": "^9.7.0",
+    "rc-select": "^8.2.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^10.7.1",
+    "concurrently": "^3.6.1",
+    "mocha": "^5.2.0",
+    "parcel-bundler": "^1.9.7",
+    "react-router-dom": "^4.3.1",
+    "scripty": "^1.7.2",
+    "supertest": "^3.1.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
+  },
+  "scripty": {
+    "silent": true
+  }
+}
