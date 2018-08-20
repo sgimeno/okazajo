@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run tsc && parcel client/index.html",
+    "clean:dist": "scripty",
     "concurrently": "concurrently",
     "dev:client": "parcel client/index.html",
     "dev:server": "scripty",
