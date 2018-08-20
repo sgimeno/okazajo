@@ -9,7 +9,7 @@
     "dev:client": "parcel client/index.html",
     "dev:server": "scripty",
     "nodemon": "nodemon",
-    "test": "mocha --exit --require ts-node/register/type-check --bail server/tests/index.ts",
+    "test": "mocha --exit --require ts-node/register/type-check --bail test/server/index.ts",
     "tsc": "tsc"
   },
   "author": "",

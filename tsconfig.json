@@ -21,6 +21,7 @@
     "client/node_modules",
     "node_modules",
     "dist",
+    "test",
     "storage",
     "client",
     "test1",
