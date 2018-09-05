@@ -4,6 +4,13 @@ import * as express from 'express'
 import * as http from 'http'
 import * as cors from 'cors'
 
+const pino = require('pino')({
+  prettyPrint: process.env.NODE_ENV !== 'production'
+})
+const expressPino = require('express-pino-logger')({
+  logger: pino
+})
+
 // Create our main app
 const app = express()
 
@@ -26,6 +33,9 @@ if (isTestInstance()) {
   }))
 }
 
+// JSON Logger with pino
+app.use(expressPino)
+
 // ----------- Views, routes and static files -----------
 
 // API
@@ -47,12 +57,13 @@ app.use(function (err, req, res, next) {
     error = err.stack || err.message || err
   }
 
-  console.error('Error in controller.', { err: error })
+  req.log.error('Error in controller.', { err: error })
   return res.status(err.status || 500).end()
 })
 
 const server = http.createServer(app)
 
 server.listen(1337, 'localhost', () => {
-  console.log('Server listening on http://%s:%d', 'localhost', 1337)
+  pino.info('Server listening on http://%s:%d', 'localhost', 1337)
+  pino.info('API index on %s', apiRoute)
 })
