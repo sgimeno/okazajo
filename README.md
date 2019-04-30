@@ -1,7 +1,7 @@
 okazajo
 =======
 
-TBD
+Free events I
 
 
 ## npm scripts
@@ -17,3 +17,6 @@ content you'd expect. For more info, see
 - `dev:client`: run client app on http://localhost:1234 watching sources with parceljs
 - `dev:server`: run server app on http://localhost:1337 watching sources with nodemon  (and TSC compilation)
 - `test`: TBD
+
+### TODO
+ + add signature validation

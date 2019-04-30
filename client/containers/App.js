@@ -1,65 +1,45 @@
 import React from 'react'
-import 'rc-calendar/assets/index.css'
-import FullCalendar from 'rc-calendar/lib/FullCalendar'
-
-import 'rc-select/assets/index.css'
-import Select from 'rc-select';
-
-import zhCN from 'rc-calendar/lib/locale/zh_CN';
-import enUS from 'rc-calendar/lib/locale/en_US';
-
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
-
-const format = 'YYYY-MM-DD';
-const cn = location.search.indexOf('cn') !== -1;
-
-const now = moment();
-if (cn) {
-  now.locale('zh-cn').utcOffset(8);
-} else {
-  now.locale('en-gb').utcOffset(0);
-}
-
-const defaultCalendarValue = now.clone();
-// defaultCalendarValue.add(-1, 'month');
-
-function onSelect(value) {
-  console.log('select', value.format(format));
-}
-
+import SearchInput from '../components/SearchInput'
+import Table from '../components/Table'
+import Sidenav from '../components/Sidenav'
 
 export default class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      type: 'date'
+      events: []
     }
-
-    this.onTypeChange = this.onTypeChange.bind(this)
+    this.query = this.query.bind(this)
   }
-
-  onTypeChange (type) {
-    this.setState({
-      type
+  mockQuery () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true)
+      }, 500)
     })
   }
-
+  query (qs) {
+    console.log('Querying with q=', qs);
+    this.mockQuery().then(() => {
+      const now = new Date().toISOString().split('T')[0]
+      this.setState({
+        events: [
+          { id: 1, name: 'HFMN concert', startDate: now, endDate: now, category: 'MUSIC/ALTERNATIVE' },
+          { id: 2, name: 'Helena Hauff session', startDate: now, endDate: now, category: 'MUSIC/ELECTRONIC' },
+          { id: 3, name: 'Judith Butler talk', startDate: now, endDate: now, category: 'PHILOSOPHY/FEMINISM' }
+        ]
+      })
+    })
+  }
   render () {
     return (
-      <div style={{ zIndex: 1000, position: 'relative' }}>
-      <FullCalendar
-          style={{ margin: 10 }}
-          Select={Select}
-          fullscreen
-          defaultValue={now}
-          onSelect={onSelect}
-          type={this.state.type}
-          onTypeChange={this.onTypeChange}
-          locale={cn ? zhCN : enUS}
-        />
-      </div>
+      <section className='section'>
+        <div className='container'>
+          <h1 className='title'>Okazajo</h1>
+          <SearchInput onSubmit={this.query}/>
+          {(this.state.events.length > 0) && <Table rows={this.state.events} />}
+        </div>
+      </section>
     )
   }
 }
