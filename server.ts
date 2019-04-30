@@ -1,15 +1,12 @@
 // TODO add logger
 // ----------- Node modules -----------
 import * as express from 'express'
+import * as bodyParser from 'body-parser'
 import * as http from 'http'
 import * as cors from 'cors'
+import { logger } from './logger'
 
-const pino = require('pino')({
-  prettyPrint: process.env.NODE_ENV !== 'production'
-})
-const expressPino = require('express-pino-logger')({
-  logger: pino
-})
+const expressPino = require('express-pino-logger')({ logger })
 
 // Create our main app
 const app = express()
@@ -19,6 +16,7 @@ const app = express()
 // ----------- Okazajo modules -----------
 import { isTestInstance } from './helpers'
 import { apiRouter } from './server/api'
+import { configure } from './server/db'
 
 // ----------- Command line -----------
 
@@ -36,12 +34,25 @@ if (isTestInstance()) {
 // JSON Logger with pino
 app.use(expressPino)
 
+// For body requests
+app.use(bodyParser.json())
+
+
 // ----------- Views, routes and static files -----------
 
-// API
-const apiRoute = '/api/' + process.env.API_VERSION
+// DB
 
-app.use(apiRoute, apiRouter)
+configure({ 
+  baseURL: `http://localhost:${process.env.STATE_PORT}`,
+  token: process.env.STATE_TOKEN
+})
+
+// API
+const port = parseInt(process.env.PORT) || 1337
+const host = process.env.HOST || 'localhost'
+const scheme = process.env.SSL === 'true' ? 'https' : 'http'
+
+app.use(apiRouter({ serverUrl: `${scheme}://${host}:${port}` }))
 
 // ----------- Errors -----------
 // Catch 404 and forward to error handler
@@ -63,7 +74,6 @@ app.use(function (err, req, res, next) {
 
 const server = http.createServer(app)
 
-server.listen(1337, 'localhost', () => {
-  pino.info('Server listening on http://%s:%d', 'localhost', 1337)
-  pino.info('API index on %s', apiRoute)
+server.listen(port, 'localhost', () => {
+  logger.info('Server listening on http://%s:%d', 'localhost', port)
 })
