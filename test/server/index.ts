@@ -1,1 +1,2 @@
-export * from './activitypub'
+import './api'
+import './activitypub'

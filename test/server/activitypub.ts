@@ -1,10 +1,12 @@
 /* tslint:disable:no-unused-expression */
 
-import { expect } from 'chai'
 import 'mocha'
+import { expect } from 'chai'
 
-describe('Test activitypub', function () {
-  it('Should return the account object', function () {
-    expect(true).to.equal(false)
+describe.skip('ActivityPub http API', function () {
+  describe('Inbox', function(){
+    it('Should return the account object', function () {
+      expect(true).to.equal(false)
+    })
   })
 })
